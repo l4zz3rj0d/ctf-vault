@@ -1,2 +1,19 @@
-# ctf-vault
-A personal vault of CTF challenges, original files, and custom exploits. Each folder includes the challenge script, my solution code, and brief notes on the vulnerability and logic used. Created for quick recall, learning, and revisiting techniques anytime.
+# CTF-Vault 🔐
+
+A curated collection of Python scripts I used (and wrote) while solving CTF challenges. 
+Organized by category for easy searching and fast recall during competitions.
+
+> “Because past me shouldn’t waste present me’s time.” – lazzer
+
+## Categories
+
+- Web Exploitation  
+- Cryptography  
+- Forensics  
+- Reverse Engineering  
+- Miscellaneous Tools  
+
+Each directory contains:
+- Challenge-specific scripts  
+- General-purpose automation  
+- Notes & explanations where needed  
