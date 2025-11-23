@@ -117,7 +117,7 @@ Everything aligned perfectly.
 # 🏁 Final Flag
 pctf{Thompson_Hall}
 
-🧠 Why This OSINT Worked
+# 🧠 Why This OSINT Worked
 
 We combined:
 
