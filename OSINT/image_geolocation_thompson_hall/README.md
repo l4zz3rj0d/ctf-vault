@@ -58,10 +58,10 @@ Connected pathways toward the Mason Pond road
 
 # Matching this with campus maps revealed:
 
-✔ It is Exploratory Hall (the main science/engineering building).
+✔ It is peterson hall (the main science/engineering building).
 
 If left = Rogers Hall
-and right = Exploratory Hall
+and right = peterson  Hall
 → the camera must be positioned somewhere between the two but elevated.
 
 # #️⃣ 4. Analyzing Camera Position & Elevation
@@ -81,7 +81,7 @@ This particular viewpoint is not possible from:
 ❌ Rogers Hall
 ❌ Eastern Shore Hall
 ❌ Any dorm buildings
-❌ Exploratory Hall
+❌ peterson Hall
 ❌ Planetary Hall
 
 Only one building sits:
