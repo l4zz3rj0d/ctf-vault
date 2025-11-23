@@ -1,15 +1,15 @@
-🔐 Trust Vault – Writeup
+# 🔐 Trust Vault – Writeup
 🏷️ Challenge Name
 
 Trust Vault
 
-📝 Challenge Description
+# 📝 Challenge Description
 
 “Leak the server-side flag stored on disk/environment by chaining the vulnerable SQL query with the legacy Jinja rendering.”
 
 Ah yes, nothing like a good “chain vulnerabilities like Pokémon evolutions” challenge.
 
-1️⃣ Overview
+# 1️⃣ Overview
 
 Trust Vault is a Flask web app with two dangerous ingredients mixed together:
 
@@ -24,7 +24,7 @@ When combined, they allow this delightful attack chain:
 Basically, the app handed us the skeleton key and asked us nicely not to use it.
 We used it anyway. 😌
 
-2️⃣ Initial Recon
+# 2️⃣ Initial Recon
 
 The app exposes several routes:
 
@@ -51,7 +51,7 @@ Which basically screams:
 
 Raw string concatenation — a classic security sin.
 
-3️⃣ Verifying SQL Injection
+# 3️⃣ Verifying SQL Injection
 
 Testing with:
 
@@ -66,7 +66,7 @@ Error: unrecognized token: "'''"
 Boom.
 SQL broken → SQL Injection confirmed. ✔️
 
-4️⃣ UNION Injection
+# 4️⃣ UNION Injection
 
 Next step: test if we can take over the query output.
 
@@ -85,7 +85,7 @@ Which means:
 
 Time to make it dance.
 
-5️⃣ Testing for Jinja SSTI
+# 5️⃣ Testing for Jinja SSTI
 
 Payload:
 
@@ -101,7 +101,7 @@ Congratulations —
 🎉 We have Server-Side Template Injection (SSTI)
 And the server is evaluating our expressions like an obedient calculator.
 
-6️⃣ Remote Code Execution via SSTI
+# 6️⃣ Remote Code Execution via SSTI
 
 Using Jinja’s sneaky object chain trick:
 
@@ -121,7 +121,7 @@ Full RCE? ✔️
 The app is basically ours now.
 (They grow up so fast 🥲)
 
-7️⃣ Locating the Flag
+# 7️⃣ Locating the Flag
 
 To hunt down the flag:
 
@@ -135,7 +135,7 @@ Result revealed:
 
 Like finding treasure with a cheat code. 🗺️💎
 
-8️⃣ Reading the Flag
+# 8️⃣ Reading the Flag
 
 The final blow:
 
@@ -144,13 +144,13 @@ The final blow:
 
 The server politely returned the goods.
 
-🏁 9. Flag
+# 🏁 9. Flag
 PCTF{SQL1_C4n_b3_U53D_3Ff1C13N7lY}
 
 
 A beautiful flag for a beautifully broken application.
 
-🔗 10. Attack Chain Summary
+# 🔗 10. Attack Chain Summary
 Step	Vulnerability	Result
 1️⃣	SQL Injection	Inject arbitrary strings
 2️⃣	UNION SELECT	Render attacker-controlled output
@@ -159,7 +159,7 @@ Step	Vulnerability	Result
 5️⃣	OS Command Execution	Run system commands
 6️⃣	File Read	Steal the flag
 
-🔥 Final Thoughts
+# 🔥 Final Thoughts
 
 Mixing raw SQL + Jinja rendering is like storing fireworks next to a campfire…
 Sure, it might be fine.
