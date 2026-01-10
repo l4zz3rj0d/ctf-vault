@@ -18,7 +18,7 @@ Retrieve the key and the flag
 ## Discovery (robots.txt)
 
 Checking the robots.txt file revealed highly sensitive information:
-
+```
 Disallow: /admin
 Disallow: /admin/tickets
 Disallow: /admin/flag
@@ -26,7 +26,7 @@ Disallow: /admin/flag
 # CTF Discovery: Default user credentials
 # Tokyo: tokyo / rio123
 # The Professor: admin / admin123
-
+```
 
 ### This exposed:
 
