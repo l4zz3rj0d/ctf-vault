@@ -71,9 +71,9 @@ http://10.60.0.227:5001/invoices/1057?format=json
 ```
 
 ### Response:
-
+```
 {"invoice":{"id":1057,"user_id":2,"owner":"helsinki","amount":206,"note":"Quarterly billing note: TDHCTF{DENVER_LAUGHS_AT_BROKEN_ACL} | Key: 6f46773092aa442662ec6181d37bb64cfb270223fa19994469258cd2e2ba6156"}}
-
+```
 
 The sensitive data was fully exposed due to missing server-side authorization checks.
 
