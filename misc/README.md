@@ -1,26 +1,26 @@
-What Is “Misc” in CTF Challenges?
+## What Is “Misc” in CTF Challenges?
 
 “Misc” (short for Miscellaneous) is the grab-bag category of CTF problems.
 These challenges don’t fit neatly into:
 
-Web
+- Web
 
-Crypto
+- Crypto
 
-Forensics
+- Forensics
 
-Reverse Engineering
+- Reverse Engineering
 
-OSINT
+- OSINT
 
-Pwn
+- Pwn
 
 So they get thrown into “Misc,” where the creators unleash pure chaos.
 
 Think of Misc as the junk drawer of CTFs —
 the place where puzzle makers put all the problems that are too weird to categorize.
 
-🧩 What Types of Things Fall Under Misc?
+## What Types of Things Fall Under Misc?
 
 These challenges can involve anything, including:
 
@@ -54,7 +54,7 @@ reassembling file structures
 
 ✔ Odd multimedia
 
-Examples:
+### Examples:
 
 A PNG that is actually a ZIP
 
@@ -66,7 +66,7 @@ A GIF hiding commands inside frames
 
 ✔ Programming tricks
 
-Challenges requiring:
+### Challenges requiring:
 
 Brainf*ck
 
@@ -80,7 +80,7 @@ data encoding puzzles
 
 Where the file hides something with no instructions.
 
-🧠 Why Misc Exists
+## Why Misc Exists
 
 Because challenge creators are… creative.
 They enjoy dropping problems that break all rules:
@@ -103,7 +103,7 @@ Problem solving
 
 Your ability to NOT lose your sanity
 
-🎯 Summary
+## Summary
 
 Misc challenges = puzzles that don’t fit anywhere else.
 They can require ANY skills:
